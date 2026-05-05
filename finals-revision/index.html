@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoDashboard</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <div class="dashboard-wrapper">
+
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <h1 class="site-title">CryptoDashboard</h1>
+            <div class="top-bar-controls">
+                <div class="refresh-control">
+                    <span class="refresh-label">Auto-refresh:</span>
+                    <select id="refresh-interval">
+                        <option value="0">Off</option>
+                        <option value="15">15s</option>
+                        <option value="30" selected>30s</option>
+                        <option value="60">1m</option>
+                        <option value="120">2m</option>
+                    </select>
+                    <span id="refresh-countdown" class="countdown"></span>
+                </div>
+                <button id="theme-toggle" class="theme-btn" title="Toggle light/dark mode">🌙</button>
+            </div>
+        </header>
+
+        <!-- GLOBAL STATS -->
+        <section id="global-stats-row">
+            <div class="stat-card">
+                <div class="stat-header">Market Cap</div>
+                <div class="stat-value" id="global-mcap">--</div>
+                <div class="percentage-pill" id="global-mcap-change">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">Volume 24h</div>
+                <div class="stat-value" id="global-volume">--</div>
+                <div class="percentage-pill negative" id="global-volume-change">--</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">BTC Dominance</div>
+                <div class="stat-value" id="btc-dominance">--</div>
+                <div class="percentage-pill" id="btc-dom-change">--</div>
+            </div>
+        </section>
+
+        <!-- NAV + SEARCH -->
+        <div class="controls-row">
+            <nav class="sub-nav">
+                <span id="nav-all" class="active">Cryptocurrencies</span>
+                <span id="nav-fav">Favorites</span>
+            </nav>
+            <div class="search-wrapper">
+                <span class="search-icon"></span>
+                <input type="text" id="search-input" placeholder="Search coins..." autocomplete="off">
+                <button id="search-clear" class="search-clear" title="Clear">✕</button>
+            </div>
+        </div>
+
+        <!-- COIN TABLE -->
+        <table id="coin-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th data-col="rank" class="sortable"># <span class="sort-arrow">▲</span></th>
+                    <th data-col="name" class="sortable">Name <span class="sort-arrow">▲</span></th>
+                    <th data-col="h1" class="sortable">1h % <span class="sort-arrow">▲</span></th>
+                    <th data-col="h24" class="sortable">24h % <span class="sort-arrow">▲</span></th>
+                    <th data-col="price" class="sortable">Price <span class="sort-arrow">▲</span></th>
+                    <th data-col="mcap" class="sortable">Market Cap <span class="sort-arrow">▲</span></th>
+                    <th data-col="volume" class="sortable">Volume 24h <span class="sort-arrow">▲</span></th>
+                    <th>7d Chart</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+
+        <div id="status-display">Fetching market data...</div>
+    </div>
+
+    <script src="JS/script.js"></script>
+</body>
+</html>
