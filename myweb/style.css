@@ -1,0 +1,307 @@
+/* =========================================
+   1. VARIABLES & RESET
+   ========================================= */
+:root {
+    --bg-main: #0f0e0e;
+    --bg-surface: #665e5ec7;
+    --accent-red: #a00000;
+    --border: #ffffffc7;
+    --text-primary: #ffffff;
+    --text-secondary: #fff7f7;
+    --text-inverse: #000000;
+    --red: #ff5252;
+    --green: #4ade80;
+    --orange-accent: #f7931a;
+    --input-bg: rgba(255,255,255,0.07);
+    --input-border: rgba(255,255,255,0.2);
+    --header-bg: rgba(15,14,14,0.95);
+}
+
+[data-theme="light"] {
+    --bg-main: #f0f2f5;
+    --bg-surface: rgba(255,255,255,0.92);
+    --accent-red: #c0392b;
+    --border: rgba(0,0,0,0.12);
+    --text-primary: #111111;
+    --text-secondary: #444444;
+    --text-inverse: #ffffff;
+    --red: #e53e3e;
+    --green: #1a9e50;
+    --input-bg: rgba(0,0,0,0.05);
+    --input-border: rgba(0,0,0,0.2);
+    --header-bg: rgba(240,242,245,0.95);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-primary);
+    background-color: var(--bg-main);
+    background-image:
+        linear-gradient(rgba(128,128,128,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(128,128,128,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 1.5rem;
+    min-height: 100vh;
+}
+
+.dashboard-wrapper {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   2. TOP BAR
+   ========================================= */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.site-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.top-bar-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.refresh-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.refresh-control select {
+    background: var(--accent-red);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.countdown {
+    font-variant-numeric: tabular-nums;
+    color: var(--orange-accent);
+    font-weight: 600;
+    min-width: 28px;
+    display: inline-block;
+}
+
+.theme-btn {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+.theme-btn:hover { background: var(--accent-red); }
+
+/* =========================================
+   3. GLOBAL STATS
+   ========================================= */
+#global-stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: var(--bg-surface);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    backdrop-filter: blur(4px);
+}
+.stat-card:hover { border-color: var(--accent-red); transform: translateY(-2px); }
+.stat-header { color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.75rem; }
+.stat-value { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; margin-bottom: 0.4rem; }
+
+/* =========================================
+   4. CONTROLS ROW (nav + search)
+   ========================================= */
+.controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.sub-nav {
+    display: flex;
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+}
+.sub-nav span {
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    padding: 0.5rem 0.25rem;
+    position: relative;
+    transition: color 0.2s;
+}
+.sub-nav span:hover { color: var(--text-primary); }
+.sub-nav span.active { color: var(--text-primary); font-weight: 600; }
+.sub-nav span.active::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem; left: 0;
+    width: 100%; height: 2px;
+    background: var(--accent-red);
+}
+
+/* Search */
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-icon {
+    position: absolute;
+    left: 10px;
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+#search-input {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    padding: 0.5rem 2rem 0.5rem 2.2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    width: 220px;
+    transition: border-color 0.2s, width 0.3s;
+    outline: none;
+}
+#search-input:focus { border-color: var(--accent-red); width: 270px; }
+#search-input::placeholder { color: var(--text-secondary); opacity: 0.6; }
+.search-clear {
+    position: absolute;
+    right: 8px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    border-radius: 4px;
+    display: none;
+}
+.search-clear:hover { color: var(--red); }
+
+/* =========================================
+   5. DATA TABLE
+   ========================================= */
+#coin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: var(--bg-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(4px);
+}
+
+#coin-table th {
+    background-color: rgba(0,0,0,0.3);
+    color: var(--text-secondary);
+    text-align: left;
+    padding: 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+[data-theme="light"] #coin-table th {
+    background-color: rgba(0,0,0,0.06);
+}
+
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable:hover { color: var(--text-primary); }
+
+.sort-arrow {
+    font-size: 0.7rem;
+    opacity: 0.3;
+    margin-left: 3px;
+    display: inline-block;
+}
+.sort-arrow.active-sort { opacity: 1; color: var(--accent-red); }
+.sort-arrow.desc { transform: rotate(180deg); }
+
+#coin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.9rem;
+}
+#coin-table tr:last-child td { border-bottom: none; }
+#coin-table tr:hover td { background-color: rgba(255,255,255,0.03); }
+[data-theme="light"] #coin-table tr:hover td { background-color: rgba(0,0,0,0.025); }
+
+.coin-cell { display: flex; align-items: center; gap: 10px; }
+.coin-cell img { width: 26px; height: 26px; border-radius: 50%; }
+.symbol { color: var(--text-secondary); font-weight: 400; font-size: 0.82rem; }
+.positive { color: var(--green); font-weight: 600; }
+.negative { color: var(--red); font-weight: 600; }
+
+.star { cursor: pointer; font-size: 1.1rem; transition: transform 0.15s; display: inline-block; }
+.star:hover { transform: scale(1.3); }
+.star.active { color: var(--orange-accent); }
+
+.percentage-pill {
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    display: inline-block;
+}
+
+/* =========================================
+   6. SPARKLINE
+   ========================================= */
+.sparkline-cell { min-width: 90px; }
+.sparkline-svg { display: block; }
+
+/* =========================================
+   7. STATUS
+   ========================================= */
+#status-display {
+    text-align: center;
+    padding: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   8. NO-RESULTS
+   ========================================= */
+.no-results td {
+    text-align: center;
+    padding: 3rem !important;
+    color: var(--text-secondary);
+}
+
